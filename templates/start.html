@@ -1,0 +1,128 @@
+<head>
+    <title>Grover's Implementation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='chart.js') }}"></script>
+</head>
+
+<body class="primary-background">
+    <div class="container" style="margin-top: 6%">
+        <div class="title-container">
+            <label class="title-text">Grover's Implementation - Start</label>
+        </div>
+        <hr class="content-border" />
+        <div class="content-container" style="align-items:center">
+            <span style="font-size: 17px">Dataset</span>
+            <input id="dataset" style="border-radius: 4px; padding: 4px; width: 75%" type="text" />
+            <span style="font-size: 17px; padding-top:17px">Target</span>
+            <input id="target" style="border-radius: 4px; padding: 4px; width: 25%" type="target" />
+            <div class="button-container" style="padding: 20px;">
+                <a onclick="sendRequest()" class="button-content" style="background: #35b519">
+                    <div class="button-middle">
+                        Start
+                    </div>
+                </a>
+            </div>
+            <div style="display: none;" id="grover">
+                <div style="display: flex; flex-direction: column">
+                    <span style="font-size: 17px; padding-bottom: 10px">Result</span>
+                    <span id="binary"></span>
+                    <span id="qubit"></span>
+                    <span id="result"></span>
+                    <span id="found"></span> 
+                    <br />
+                    <canvas id="amplitude" width="400" height="400"></canvas>
+                    <span id="time"></span>
+                </div>
+            </div>
+            <div style="display: none;" id="grover_error">
+                <div style="display: flex; flex-direction: column">
+                    <span style="font-size: 17px; padding-bottom: 10px">Result</span>
+                    <span id="result_error"></span>
+                </div>
+            </div>
+            <div class="button-container" style="padding: 20px;">
+                <a href="/" class="button-content">
+                    <div class="button-middle">
+                        Back
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+<div class="footer">
+    <label class="footer-text">Anthony - 2019</label>
+</div>
+
+<script>
+    function sendRequest(){
+        $('#grover').hide()
+        $('#grover_error').hide()
+        let dataset = $('#dataset').val()
+        let target = $('#target').val()
+        // console.log(dataset)
+        // console.log(target)
+        var ctx = document.getElementById('amplitude').getContext('2d');
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:5002/search",
+            data: JSON.stringify({"dataset": dataset, "target":target}),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function(result){
+                // console.log("haha")
+                // console.log(result)
+                $('#binary').text("Binary representation of data target : " + result.binary)
+                $('#qubit').text("Number of qubit : " + result.qubit)
+                $('#result').text("Result Grover's search : " + result.result)
+                if(result.found)
+                    $('#found').text("Data found")
+                else
+                    $('#found').text("Data not found")
+                $('#time').text("User time : " + result.time + "s")
+                
+                var listState = []
+                listState = result.state
+                
+                var listData = []
+                listData= result.amplitude
+
+                var chartColor = []
+                chartColor = result.chartColor
+                 
+                var borderColor = []
+                borderColor = result.borderColor
+
+                var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: listState,
+                    datasets: [{
+                        label: 'amplitudes',
+                        data: listData,
+                        backgroundColor: chartColor,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    }
+                }
+            });
+                $('#grover').show()   
+            },
+            error: function(result){
+               $('#result_error').text("Error, please check your input or try again later")
+               $('#grover_error').show()
+            }
+
+        })
+    }
+</script>
