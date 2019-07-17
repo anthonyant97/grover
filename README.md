@@ -33,7 +33,7 @@ How to run Grover's Implementation Program :
 *Since qvm use port 5000 and flask also use port 5000, I change the port to 5002 for flask  
 *If you have any question, feel free to ask me through email : anthonyant97@gmail.com  
 
-`R. Smith, M. J. Curtis and W. J. Zeng, "A Practical Quantum Instruction Set Architecture," (2016),  
-  arXiv:1608.03355 [quant-ph], https://arxiv.org/abs/1608.03355`
+`R. Smith, M. J. Curtis and W. J. Zeng, "A Practical Quantum Instruction Set Architecture," (2016),`  
+`   arXiv:1608.03355 [quant-ph], https://arxiv.org/abs/1608.03355`
 
 
