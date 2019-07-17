@@ -52,7 +52,7 @@
     </div>
 </body>
 <div class="footer">
-    <label class="footer-text">Anthony - 2019</label>
+    <label class="footer-text">© 2019 Anthony. All rights reserved</label>
 </div>
 
 <script>
@@ -61,8 +61,6 @@
         $('#grover_error').hide()
         let dataset = $('#dataset').val()
         let target = $('#target').val()
-        // console.log(dataset)
-        // console.log(target)
         var ctx = document.getElementById('amplitude').getContext('2d');
         $.ajax({
             type: 'POST',
@@ -71,8 +69,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function(result){
-                // console.log("haha")
-                // console.log(result)
                 $('#binary').text("Binary representation of data target : " + result.binary)
                 $('#qubit').text("Number of qubit : " + result.qubit)
                 $('#result').text("Result Grover's search : " + result.result)
