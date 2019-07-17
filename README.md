@@ -1,3 +1,5 @@
+# Grover's Quantum Search Algorithm Using Rigetti Forest
+
 Before you start, these are applications that used to make this program :  
 - Jupyter notebook  
 - Anaconda Prompt or any terminal that can run python command  
@@ -10,7 +12,7 @@ And these are the dependencies:
 - Numpy  
 - Flask (you can install it via pip)  
 
-How to run Grover's Implementation Program :  
+How to run this program :  
 - Clone this project  
 - Run `forest-sdk.msi` to install Forest SDK (for Windows)  
 - Open terminal (e.g. Command Prompt), run quantum virtual machine with command `qvm --server`  
